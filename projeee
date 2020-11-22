@@ -54,7 +54,9 @@ public class Proje1 {
 
     public static void main(String[] args) {
 
+        boolean devam = true;
         Scanner s = new Scanner(System.in);
+        while (devam) {       
         System.out.println("**********Urun numarasi kontrol etme uygulamasına hoş geldiniz**********");
         System.out.println("Urun numarası test et(T): ");
         System.out.println("Cıkış(C): ");
@@ -99,6 +101,7 @@ public class Proje1 {
 
             case "C":
                 System.out.println("İyi gunler...");
+                devam = false;
                 break;
             default:
                 System.out.println("Yanlış bir şey girdiniz tekrar deneyiniz...");
@@ -106,5 +109,6 @@ public class Proje1 {
 
         }
 
+        }
     }
 }
