@@ -1,0 +1,110 @@
+import java.util.Scanner;
+
+/**
+ * @file Proje1
+ * @description Kullanıcıdan alınan ürün kodunun geçerli bir ürün kodu olup
+ * olmadığını kontrol eden program.
+ * @assignment Proje 1
+ * @date 15.11.2020 - 29.11.2020
+ * @author Mertcan Karabaş - mertcan.karabas@stu.fsm.edu.tr
+ */
+
+public class Proje1 {
+
+    public static int yeniUrunToplam(String urunKodu) {
+        int toplam = 0;
+        for (int i = 0; i < urunKodu.length(); i++) {
+            if (i == 4 || i == 9 || i == 14) {
+                continue;
+            } else {
+                if (i == 0 || i == 2 || i == 5 || i == 7 || i == 10 || i == 12 || i == 15 || i == 17) {
+                    toplam += (int) (buyuklukKontrol(i, urunKodu) - 48);
+                } else {
+                    toplam += (int) (urunKodu.charAt(i) - 48);
+                }
+            }
+        }
+        return toplam;
+    }
+
+    public static void yeniUrunKodu(String urunKodu) {
+        for (int i = 0; i < urunKodu.length(); i++) {
+            if (i == 0 || i == 2 || i == 5 || i == 7 || i == 10 || i == 12 || i == 15 || i == 17) {
+                System.out.print(buyuklukKontrol(i, urunKodu));
+            } else {
+                System.out.print(urunKodu.charAt(i));
+            }
+        }
+        System.out.println("");
+    }
+
+    public static char buyuklukKontrol(int kontrol, String urunKodu) {
+        char yeniSayi = 'c';
+        int sayi = 0;
+        // Urun kodunun kontrol edilecek olan sayıyı istenilen sayıya çeviriyoruz.
+        // Sayıyı int'e kast ederken bize ASCII tablosundaki karşılığını verdiği için 48 çıkartıyoruz.
+        sayi = (int) urunKodu.charAt(kontrol) - 48;
+        if (sayi >= 5) {
+            yeniSayi = (char) (((sayi * 2) - 9) + 48);//Burada da bize tekrardan char haline versin istediğimiz için 48 ekliyoruz.
+        } else {
+            yeniSayi = (char) ((sayi * 2) + 48);
+        }
+        return yeniSayi;
+    }
+
+    public static void main(String[] args) {
+
+        Scanner s = new Scanner(System.in);
+        System.out.println("**********Urun numarasi kontrol etme uygulamasına hoş geldiniz**********");
+        System.out.println("Urun numarası test et(T): ");
+        System.out.println("Cıkış(C): ");
+        System.out.print("Secenek: ");
+        String secenek = s.nextLine();
+
+        switch (secenek) {
+            case "T":
+                System.out.print("Ürün Numarasını Giriniz: ");
+
+                String urunKodu = s.nextLine();
+
+                if (urunKodu.length() == 19 && urunKodu.charAt(4) == ' ' && urunKodu.charAt(9) == ' ' && urunKodu.charAt(14) == ' ') {
+
+                    //Yeni ürün kodunu yanyana yazıyoruz.
+                    System.out.print("Digitlerinin iki katının hesaplanmış hali: ");
+                    yeniUrunKodu(urunKodu);
+
+                    //toplam değişkeninde ürün kodlarının int'e çevirip topluyoruz.
+                    int toplam = yeniUrunToplam(urunKodu);
+
+                    //Değerleri tek tek yazıp toplamını ekrana basıyoruz.
+                    System.out.println("Digitler toplamı: " + buyuklukKontrol(0, urunKodu) + "+" + urunKodu.charAt(1) + "+"
+                            + buyuklukKontrol(2, urunKodu) + "+" + urunKodu.charAt(3) + "+" + buyuklukKontrol(5, urunKodu) + "+"
+                            + urunKodu.charAt(6) + "+" + buyuklukKontrol(7, urunKodu) + "+" + urunKodu.charAt(8) + "+"
+                            + buyuklukKontrol(10, urunKodu) + "+" + urunKodu.charAt(11) + "+" + buyuklukKontrol(12, urunKodu) + "+"
+                            + urunKodu.charAt(13) + "+" + buyuklukKontrol(15, urunKodu) + "+" + urunKodu.charAt(16) + "+"
+                            + buyuklukKontrol(17, urunKodu) + "+" + urunKodu.charAt(18) + " = " + toplam);
+
+                    //Eğer toplamın 10'a bölümünden kalan 0 ise ürün geçerli değilse geçerli değildir yazdırıyoruz.
+                    if (toplam % 10 == 0) {
+                        System.out.println("Ürün numarası geçerlidir.");
+
+                    } else {
+                        System.out.println(toplam + " sayısı 10'a bölünmediği için ürün numarası geçersizdir.");
+                    }
+
+                } else {
+                    System.out.println("Ürün kodunu düzgün girmediniz yeniden deneyiniz...");
+                }
+                break;
+
+            case "C":
+                System.out.println("İyi gunler...");
+                break;
+            default:
+                System.out.println("Yanlış bir şey girdiniz tekrar deneyiniz...");
+                break;
+
+        }
+
+    }
+}
